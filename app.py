@@ -23,3 +23,33 @@ if st.button("Run Selenium"):
     driver.get("https://www.google.com")
     st.write("Page title:", driver.title)
     driver.quit()
+import streamlit as st
+import subprocess
+
+def install_chromedriver():
+    st.write("Installing ChromeDriver...")
+
+    try:
+        # Download ChromeDriver
+        subprocess.run(["wget", "-O", "/tmp/chromedriver.zip", 
+                        "https://storage.googleapis.com/chrome-for-testing-public/127.0.6533.99/linux64/chromedriver-linux64.zip"], 
+                       check=True)
+        
+        # Unzip ChromeDriver
+        subprocess.run(["unzip", "/tmp/chromedriver.zip", "-d", "/tmp/"], check=True)
+        
+        # Move ChromeDriver to the correct location
+        subprocess.run(["mv", "/tmp/chromedriver-linux64/chromedriver", "/usr/local/bin/chromedriver"], check=True)
+        
+        # Clean up by removing the zip file
+        subprocess.run(["rm", "/tmp/chromedriver.zip"], check=True)
+
+        st.success("ChromeDriver installed successfully!")
+    except subprocess.CalledProcessError as e:
+        st.error(f"An error occurred: {e}")
+
+# Streamlit app code
+st.title("ChromeDriver Installer")
+
+if st.button("Install ChromeDriver"):
+    install_chromedriver()
