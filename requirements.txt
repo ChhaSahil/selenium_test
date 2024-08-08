@@ -1,0 +1,8 @@
+streamlit
+pandas
+numpy
+selenium
+webdriver-manager
+tensorflow==2.17.0
+
+transformers==4.35.0 
